@@ -15,7 +15,7 @@ function MyOrders() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/orders/user/${user.id}`
+        `${import.meta.env.VITE_API_URL}/api/orders/user/${user.id}`
       );
 
       setOrders(res.data);

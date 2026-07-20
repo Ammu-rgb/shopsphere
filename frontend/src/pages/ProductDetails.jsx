@@ -30,7 +30,7 @@ function ProductDetails({ cart, setCart }) {
     try {
       setLoading(true);
 
-      const res = await axios.get("http://localhost:5000/api/products");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
       const allProducts = res.data || [];
 
       setProducts(allProducts);
@@ -53,7 +53,7 @@ function ProductDetails({ cart, setCart }) {
       setReviewLoading(true);
 
       const res = await axios.get(
-        `http://localhost:5000/api/reviews/${id}`
+        `${import.meta.env.VITE_API_URL}/api/reviews/${id}`
       );
 
       setReviews(res.data || []);
@@ -130,7 +130,7 @@ function ProductDetails({ cart, setCart }) {
       const user = JSON.parse(localStorage.getItem("user"));
 
 await axios.post(
-  "http://localhost:5000/api/wishlist",
+  `${import.meta.env.VITE_API_URL}/api/wishlist`,
   {
     userId: user.id,
     productId: product._id,
@@ -150,7 +150,7 @@ await axios.post(
 
     try {
       await axios.post(
-  "http://localhost:5000/api/reviews",
+  `${import.meta.env.VITE_API_URL}/api/reviews`,
   {
     productId: id,
     customerName: reviewForm.customerName,

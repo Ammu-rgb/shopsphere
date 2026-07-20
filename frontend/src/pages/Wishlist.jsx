@@ -15,7 +15,7 @@ function Wishlist() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/wishlist/${user.id}`
+        `${import.meta.env.VITE_API_URL}/api/wishlist/${user.id}`
       );
 
       console.log(res.data);
@@ -29,7 +29,7 @@ function Wishlist() {
   const removeWishlist = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/wishlist/${id}`
+        `${import.meta.env.VITE_API_URL}/api/wishlist/${id}`
       );
 
       fetchWishlist();

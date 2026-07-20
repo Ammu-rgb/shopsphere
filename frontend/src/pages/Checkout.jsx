@@ -95,7 +95,7 @@ const [loadingAddress, setLoadingAddress] = useState(false);
   try {
     // Razorpay Order Create
     const { data } = await axios.post(
-      "http://localhost:5000/api/payment/create-order",
+      `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
       {
         amount: grandTotal,
       }
@@ -116,7 +116,7 @@ const [loadingAddress, setLoadingAddress] = useState(false);
 
       handler: async function (response) {
         const verify = await axios.post(
-  "http://localhost:5000/api/payment/verify-payment",
+  `${import.meta.env.VITE_API_URL}/api/payment/verify-payment`,
   {
     razorpay_order_id: response.razorpay_order_id,
     razorpay_payment_id: response.razorpay_payment_id,
@@ -154,7 +154,7 @@ const orderData = {
 };
 
         await axios.post(
-          "http://localhost:5000/api/orders",
+          `${import.meta.env.VITE_API_URL}/api/orders`,
           orderData
         );
 

@@ -11,7 +11,7 @@ function Orders() {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/orders"
+        `${import.meta.env.VITE_API_URL}/api/orders`
       );
 
       setOrders(res.data);
@@ -23,7 +23,7 @@ function Orders() {
   const updateStatus = async (id, orderStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/orders/${id}`,
         {
           orderStatus,
         }
@@ -44,7 +44,7 @@ function Orders() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/orders/${id}`
+        `${import.meta.env.VITE_API_URL}/api/orders/${id}`
       );
 
       fetchOrders();
