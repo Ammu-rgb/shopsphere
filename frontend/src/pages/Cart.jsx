@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
-
+import {
+  FaTrash,
+  FaShoppingCart,
+  FaMinus,
+  FaPlus,
+  FaTruck,
+  FaShieldAlt,
+  FaTag,
+} from "react-icons/fa";
 function Cart({ cart, setCart }) {
   const navigate = useNavigate();
 
@@ -42,19 +50,26 @@ function Cart({ cart, setCart }) {
 
   return (
     <div  className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8">
-        🛒 Your Cart
-      </h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 flex justify-center items-center gap-3">
+  <FaShoppingCart className="text-blue-600" />
+  Your Cart
+</h1>
 
       {cart.length === 0 ? (
         <div className="text-center mt-20">
           <h2 className="text-3xl font-bold text-gray-600">
-            Your Cart is Empty 😔
+            Your Cart is Empty
           </h2>
 
           <p className="text-gray-500 mt-2">
             Add some products to continue shopping.
           </p>
+          <button
+onClick={()=>navigate("/products")}
+className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition"
+>
+Continue Shopping
+</button>
         </div>
       ) : (
         <>
@@ -83,9 +98,9 @@ function Cart({ cart, setCart }) {
                     <div className="flex items-center gap-3 mt-4">
                       <button
                         onClick={() => decreaseQuantity(item._id)}
-                        className="bg-red-500 text-white w-8 h-8 rounded-full"
+                        className="bg-red-500 hover:bg-red-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
                       >
-                        -
+                        <FaMinus />
                       </button>
 
                       <span className="font-bold text-lg">
@@ -94,9 +109,9 @@ function Cart({ cart, setCart }) {
 
                       <button
                         onClick={() => increaseQuantity(item._id)}
-                        className="bg-green-600 text-white w-8 h-8 rounded-full"
+                        className="bg-green-600 hover:bg-green-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
                       >
-                        +
+                        <FaPlus />
                       </button>
                     </div>
                   </div>
@@ -109,9 +124,12 @@ function Cart({ cart, setCart }) {
 
                   <button
                     onClick={() => removeFromCart(item._id)}
-                    className="mt-4 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
+                    className="mt-4 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl transition"
                   >
-                    Remove
+                    <>
+  <FaTrash className="inline mr-2" />
+  Remove
+</>
                   </button>
                 </div>
               </div>
@@ -123,7 +141,30 @@ function Cart({ cart, setCart }) {
               <span>Total Items</span>
               <span>{totalItems}</span>
             </div>
+            <hr className="my-5" />
 
+<div className="space-y-3">
+
+<div className="flex justify-between">
+<span>Subtotal</span>
+<span>₹{totalPrice.toLocaleString()}</span>
+</div>
+
+<div className="flex justify-between">
+<span>Shipping</span>
+<span className="text-green-600 font-semibold">
+FREE
+</span>
+</div>
+
+<div className="flex justify-between">
+<span>GST</span>
+<span>Included</span>
+</div>
+
+</div>
+
+<hr className="my-5" />
             <div className="flex justify-between text-2xl sm:text-3xl font-bold text-green-600 mt-4">
               <span>Grand Total</span>
               <span>₹{totalPrice.toLocaleString()}</span>
@@ -133,8 +174,26 @@ function Cart({ cart, setCart }) {
               onClick={() => navigate("/checkout")}
               className="mt-6 w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 rounded-xl text-lg font-semibold transition duration-300 shadow-lg hover:shadow-xl"
             >
-              Proceed to Checkout
+              Proceed Secure Checkout →
             </button>
+            <div className="mt-6 space-y-3 text-sm text-gray-600">
+
+  <div className="flex items-center gap-3">
+    <FaTruck className="text-blue-600" />
+    <span>Free Delivery Across India</span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaShieldAlt className="text-green-600" />
+    <span>100% Secure Payments</span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaTag className="text-orange-500" />
+    <span>Best Price Guaranteed</span>
+  </div>
+
+</div>
           </div>
         </>
       )}

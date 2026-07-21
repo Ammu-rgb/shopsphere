@@ -177,6 +177,37 @@ const fetchStats = async () => {
         </h1>
    
 <div className="flex justify-center gap-4 mb-8">
+  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+  <div className="bg-white rounded-xl shadow-lg p-6">
+    <p className="text-gray-500">Products</p>
+    <h2 className="text-3xl font-bold text-blue-600">
+      {stats.totalProducts}
+    </h2>
+  </div>
+
+  <div className="bg-white rounded-xl shadow-lg p-6">
+    <p className="text-gray-500">Orders</p>
+    <h2 className="text-3xl font-bold text-green-600">
+      {stats.totalOrders}
+    </h2>
+  </div>
+
+  <div className="bg-white rounded-xl shadow-lg p-6">
+    <p className="text-gray-500">Customers</p>
+    <h2 className="text-3xl font-bold text-purple-600">
+      {stats.totalCustomers}
+    </h2>
+  </div>
+
+  <div className="bg-white rounded-xl shadow-lg p-6">
+    <p className="text-gray-500">Revenue</p>
+    <h2 className="text-3xl font-bold text-orange-600">
+      ₹{stats.totalRevenue.toLocaleString()}
+    </h2>
+  </div>
+
+</div>
   <Link
     to="/orders"
     className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold"
@@ -264,10 +295,15 @@ const fetchStats = async () => {
 
             <div className="flex gap-3 md:col-span-2">
               <button
-                type="submit"
+type="submit"
+disabled={loading}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
               >
-                {editingId ? "Update Product" : "Add Product"}
+                loading
+? "Saving..."
+: editingId
+? "Update Product"
+: "Add Product"
               </button>
 
               {editingId && (
@@ -284,7 +320,7 @@ const fetchStats = async () => {
         </div>
 
         {/* Product Table */}
-        <div className="bg-white shadow-lg rounded-xl overflow-x-auto">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <table className="w-full">
             <thead className="bg-blue-600 text-white">
               <tr>
@@ -331,9 +367,31 @@ const fetchStats = async () => {
 
                     <td className="p-3">₹{product.price}</td>
 
-                    <td className="p-3">{product.stock}</td>
+                    <td className="p-3">
 
-                    <td className="p-3 max-w-xs truncate">
+{product.stock===0 ? (
+
+<span className="text-red-600 font-bold">
+Out of Stock
+</span>
+
+):product.stock<=5?(
+
+<span className="text-orange-500 font-bold">
+{product.stock} Left
+</span>
+
+):(
+
+<span className="text-green-600 font-bold">
+{product.stock}
+</span>
+
+)}
+
+</td>
+
+                    <td className="p-3 max-w-xs line-clamp-2">
                       {product.description}
                     </td>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 function HeroSlider() {
   const banners = [
@@ -21,21 +22,18 @@ function HeroSlider() {
   }, []);
 
   return (
-    <>
-      {/* Banner Image */}
-
+    <div className="relative w-full h-full">
+      {/* Banner */}
       <img
         src={banners[currentBanner]}
-        alt="Banner"
+        alt={`Banner ${currentBanner + 1}`}
         className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
       />
 
-      {/* Overlay */}
-
-      <div className="absolute inset-0 bg-black/50"></div>
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
 
       {/* Left Arrow */}
-
       <button
         onClick={() =>
           setCurrentBanner(
@@ -44,13 +42,12 @@ function HeroSlider() {
               : currentBanner - 1
           )
         }
-       className="absolute left-2 sm:left-4 md:left-5 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full shadow-lg text-lg sm:text-xl md:text-2xl"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition"
       >
-        ❮
+        <FaChevronLeft />
       </button>
 
       {/* Right Arrow */}
-
       <button
         onClick={() =>
           setCurrentBanner(
@@ -59,27 +56,26 @@ function HeroSlider() {
               : currentBanner + 1
           )
         }
-       className="absolute right-2 sm:right-4 md:right-5 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full shadow-lg text-lg sm:text-xl md:text-2xl"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition"
       >
-        ❯
+        <FaChevronRight />
       </button>
 
       {/* Dots */}
-
-      <div className="absolute bottom-3 sm:bottom-5 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-30">
         {banners.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentBanner(index)}
-            className={`transition-all rounded-full ${
+            className={`rounded-full transition-all duration-300 ${
               currentBanner === index
-  ? "bg-white w-6 sm:w-8 h-2 sm:h-3"
-  : "bg-gray-300 w-2 h-2 sm:w-3 sm:h-3"
+                ? "bg-white w-8 h-2"
+                : "bg-white/60 w-2 h-2"
             }`}
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

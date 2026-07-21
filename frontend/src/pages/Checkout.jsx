@@ -3,6 +3,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useRef } from "react";
+import {
+  FaMapMarkerAlt,
+  FaCreditCard,
+  FaTruck,
+  FaShieldAlt,
+  FaTag,
+  FaBoxOpen,
+} from "react-icons/fa";
 import { successToast, errorToast } from "../utils/toast";
 
 function Checkout({ cart, setCart }) {
@@ -194,16 +202,18 @@ navigate("/order-success");
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 py-6 md:py-10">
-      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-10">
-        Checkout
-      </h1>
+      <h1 className="text-3xl md:text-4xl font-bold text-center mb-10 flex justify-center items-center gap-3">
+  <FaCreditCard className="text-blue-600" />
+  Secure Checkout
+</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Shipping Address */}
         <div className="bg-white rounded-xl shadow-lg p-5 md:p-6">
-          <h2 className="text-2xl font-bold mb-5">
-            Shipping Address
-          </h2>
+          <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
+  <FaMapMarkerAlt className="text-red-500" />
+  Shipping Address
+</h2>
 
           <div className="space-y-4">
             <input
@@ -212,7 +222,7 @@ navigate("/order-success");
               placeholder="Full Name"
               value={address.name}
               onChange={handleChange}
-              className="border w-full p-3 rounded-lg text-sm sm:text-base"
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -221,7 +231,7 @@ navigate("/order-success");
               placeholder="Phone Number"
               value={address.phone}
               onChange={handleChange}
-              className="border w-full p-3 rounded-lg text-sm sm:text-base"
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -230,7 +240,7 @@ navigate("/order-success");
               placeholder="City"
               value={address.city}
               onChange={handleChange}
-            className="border w-full p-3 rounded-lg text-sm sm:text-base"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -239,7 +249,7 @@ navigate("/order-success");
               placeholder="State"
               value={address.state}
               onChange={handleChange}
-              className="border w-full p-3 rounded-lg text-sm sm:text-base"
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -248,7 +258,7 @@ navigate("/order-success");
               placeholder="Pincode"
               value={address.pincode}
               onChange={handleChange}
-              className="border w-full p-3 rounded-lg text-sm sm:text-base"
+              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
           <div>
@@ -294,18 +304,19 @@ navigate("/order-success");
 
             <button
               onClick={placeOrder}
-             className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg text-base sm:text-lg font-semibold transition"
+           className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 rounded-xl text-lg font-bold transition shadow-lg hover:shadow-xl"
             >
-              Place Order
+              Proceed to Payment →
             </button>
           </div>
         </div>
 
         {/* Order Summary */}
         <div className="bg-white rounded-xl shadow-lg p-5 md:p-6">
-          <h2 className="text-2xl font-bold mb-5">
-            Order Summary
-          </h2>
+          <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
+  <FaBoxOpen className="text-blue-600" />
+  Order Summary
+</h2>
 
           {cart.length === 0 ? (
             <p className="text-gray-500">
@@ -316,7 +327,7 @@ navigate("/order-success");
               {cart.map((item) => (
                 <div
                   key={item._id}
-                  className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b py-3 gap-2"
+                 className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 rounded-xl p-4 mb-3 hover:bg-gray-100 transition"
                 >
                   <div>
                     <h3 className="font-semibold">
@@ -361,6 +372,24 @@ navigate("/order-success");
                   <span>Grand Total</span>
                   <span>₹{grandTotal.toLocaleString()}</span>
                 </div>
+                <div className="mt-6 space-y-3 text-gray-600">
+
+<div className="flex items-center gap-3">
+<FaTruck className="text-blue-600"/>
+<span>Free Delivery Available</span>
+</div>
+
+<div className="flex items-center gap-3">
+<FaShieldAlt className="text-green-600"/>
+<span>100% Secure Payment</span>
+</div>
+
+<div className="flex items-center gap-3">
+<FaTag className="text-orange-500"/>
+<span>Best Price Guaranteed</span>
+</div>
+
+</div>
               </div>
             </>
           )}

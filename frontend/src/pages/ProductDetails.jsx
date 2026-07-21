@@ -2,7 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { successToast, errorToast } from "../utils/toast";
-
+import {
+  FaHeart,
+  FaShoppingCart,
+  FaBolt,
+  FaStar,
+  FaShippingFast,
+  FaShieldAlt,
+  FaUndo,
+} from "react-icons/fa";
 function ProductDetails({ cart, setCart }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -203,7 +211,7 @@ await axios.post(
           <img
             src={product.image}
             alt={product.name}
-           className="w-full h-72 sm:h-96 lg:h-[500px] object-cover rounded-xl shadow"
+           className="w-full h-72 sm:h-96 lg:h-[520px] object-cover rounded-2xl shadow-2xl hover:scale-105 transition duration-500"
           />
         </div>
 
@@ -215,10 +223,23 @@ await axios.post(
           <p className="mt-3 text-gray-500">
             Category: {product.category}
           </p>
+          <div className="flex items-center gap-1 mt-3 text-yellow-500">
+  <FaStar />
+  <FaStar />
+  <FaStar />
+  <FaStar />
+  <FaStar />
 
+  <span className="ml-2 text-gray-600">
+    ({reviews.length} Reviews)
+  </span>
+</div>
           <p className="mt-4 text-2xl md:text-3xl font-bold text-green-600">
             ₹{product.price}
           </p>
+          <p className="text-sm text-gray-500 mt-2">
+Inclusive of all taxes
+</p>
 
           <p className="mt-6 text-gray-700 leading-7">
             {product.description}
@@ -239,27 +260,54 @@ await axios.post(
               </span>
             )}
           </div>
+          <div className="mt-8 space-y-4">
+
+  <div className="flex items-center gap-3">
+    <FaShippingFast className="text-blue-600 text-xl" />
+    <span className="text-gray-700">
+      Free Delivery Available
+    </span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaShieldAlt className="text-green-600 text-xl" />
+    <span className="text-gray-700">
+      100% Secure Payment
+    </span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaUndo className="text-orange-500 text-xl" />
+    <span className="text-gray-700">
+      7 Days Easy Return
+    </span>
+  </div>
+
+</div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
             <button
               onClick={addToCart}
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
             >
-              Add To Cart
+              <FaShoppingCart className="inline mr-2"/>
+Add to Cart
             </button>
 
             <button
               onClick={handleBuyNow}
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
             >
-              Buy Now
+              <FaBolt className="inline mr-2"/>
+Buy Now
             </button>
 
             <button
               onClick={addToWishlist}
               className="w-full bg-pink-600 text-white py-3 rounded-lg hover:bg-pink-700 transition"
             >
-              Wishlist
+              <FaHeart className="inline mr-2"/>
+Wishlist
             </button>
           </div>
 
@@ -283,21 +331,21 @@ await axios.post(
                 {reviews.map((review) => (
                   <div
                     key={review._id}
-                    className="border rounded-lg p-4"
+                    className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-2xl transition duration-300"
                   >
-                    <div className="flex justify-between">
-                      <h3 className="font-bold">
-                        {review.name}
-                      </h3>
+                    <div className="flex justify-between items-center">
+  <h3 className="font-bold text-lg">
+    {review.name}
+  </h3>
 
-                      <span>
-                        ⭐ {review.rating}
-                      </span>
-                    </div>
+  <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">
+    ⭐ {review.rating}/5
+  </span>
+</div>
 
-                    <p className="mt-2">
-                      {review.comment}
-                    </p>
+                    <p className="mt-4 text-gray-600 leading-7">
+  {review.comment}
+</p>
                   </div>
                 ))}
               </div>

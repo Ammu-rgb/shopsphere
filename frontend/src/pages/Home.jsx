@@ -1,9 +1,9 @@
 import HeroSection from "../components/home/HeroSection";
+import Categories from "../components/home/Categories";
+import FeaturedProducts from "../components/home/FeaturedProducts";
 import WelcomeSection from "../components/home/WelcomeSection";
 import Stats from "../components/home/Stats";
 import WhyChooseUs from "../components/home/WhyChooseUs";
-import FeaturedProducts from "../components/home/FeaturedProducts";
-import Categories from "../components/home/Categories";
 import Testimonials from "../components/home/Testimonials";
 import Newsletter from "../components/home/Newsletter";
 import Footer from "../components/home/Footer";
@@ -11,14 +11,31 @@ import Footer from "../components/home/Footer";
 function Home() {
   return (
     <main className="bg-gray-50 overflow-x-hidden">
+      {/* Hero Banner */}
       <HeroSection />
-      <WelcomeSection />
-      <Stats />
-      <WhyChooseUs />
-      <FeaturedProducts />
+
+      {/* Categories - Moved Up for Better UX */}
       <Categories />
+
+      {/* Featured Products */}
+      <FeaturedProducts />
+
+      {/* Welcome Section */}
+      <WelcomeSection />
+
+      {/* Stats */}
+      <Stats />
+
+      {/* Why Choose Us */}
+      <WhyChooseUs />
+
+      {/* Testimonials */}
       <Testimonials />
+
+      {/* Newsletter */}
       <Newsletter />
+
+      {/* Footer */}
       <Footer />
     </main>
   );

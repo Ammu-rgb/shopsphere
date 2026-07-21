@@ -64,25 +64,47 @@ function MyOrders() {
   return (
     <div className="min-h-screen bg-gray-100 p-10">
       <h1 className="text-4xl font-bold text-center mb-10">
-        📦 My Orders
+        My Orders
       </h1>
+      <p className="text-center text-gray-500 mb-10">
+  Track all your orders and their current status.
+</p>
 
       {orders.length === 0 ? (
-        <h2 className="text-center text-2xl text-gray-500">
-          No Orders Yet
-        </h2>
+        <div className="flex flex-col items-center justify-center mt-20">
+
+  <div className="text-7xl">
+    📦
+  </div>
+
+  <h2 className="mt-6 text-3xl font-bold text-gray-700">
+    No Orders Yet
+  </h2>
+
+  <p className="mt-2 text-gray-500">
+    Looks like you haven't placed an order yet.
+  </p>
+
+  <button
+    onClick={() => window.location.href="/products"}
+    className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold"
+  >
+    Continue Shopping
+  </button>
+
+</div>
       ) : (
         <div className="space-y-8">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white rounded-xl shadow-lg p-6"
+              className="bg-white rounded-3xl shadow-lg p-6 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               <div className="flex justify-between flex-wrap gap-4 mb-5">
                 <div>
                   <p className="font-bold">Order ID:</p>
 
-                  <p className="text-gray-600 break-all">
+                  <p className="text-sm text-gray-500 break-all">
                     {order._id}
                   </p>
                 </div>
@@ -93,7 +115,7 @@ function MyOrders() {
                   </p>
 
                   <p className="text-green-600 text-xl font-bold">
-                    ₹{order.totalAmount}
+                   ₹{Number(order.totalAmount).toLocaleString()}
                   </p>
                 </div>
 
@@ -103,7 +125,7 @@ function MyOrders() {
                   </p>
 
                   <span
-                    className={`px-4 py-2 rounded-full font-semibold ${getStatusColor(
+                    className={`inline-block px-5 py-2 rounded-full text-sm font-bold shadow ${getStatusColor(
                       order.orderStatus
                     )}`}
                   >
@@ -117,12 +139,12 @@ function MyOrders() {
               {order.products.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-5 border-b py-4"
+                  className="flex flex-col sm:flex-row items-center gap-5 border-b py-5"
                 >
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-24 h-24 object-cover rounded-lg"
+                    className="w-28 h-28 rounded-xl object-cover shadow"
                   />
 
                   <div className="flex-1">
@@ -134,18 +156,21 @@ function MyOrders() {
                       Quantity: {item.quantity}
                     </p>
 
-                    <p className="text-green-600 font-semibold">
+                    <p className="text-xl font-bold text-green-600 mt-2">
                       ₹{item.price}
                     </p>
                   </div>
                 </div>
               ))}
 
-              <div className="mt-5 text-right text-gray-500">
-                Ordered on{" "}
-                {new Date(
-                  order.createdAt
-                ).toLocaleString()}
+              <div className="mt-6 flex justify-between items-center text-gray-500 text-sm">
+                <span>
+📅 {new Date(order.createdAt).toLocaleDateString()}
+</span>
+
+<span>
+🕒 {new Date(order.createdAt).toLocaleTimeString()}
+</span>
               </div>
             </div>
           ))}

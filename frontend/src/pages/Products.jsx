@@ -211,7 +211,7 @@ function Products({ cart, setCart }) {
           No Products Found 😔
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product._id}
@@ -235,10 +235,10 @@ function Products({ cart, setCart }) {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-64 object-cover bg-gray-100 transition duration-500 hover:scale-110"
+                className="w-full h-36 sm:h-48 lg:h-64 object-cover bg-gray-100 transition duration-500 hover:scale-105"
               />
 
-              <div className="p-5">
+              <div className="p-3 sm:p-5">
                 <div className="flex justify-between items-center">
 
   <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -250,11 +250,11 @@ function Products({ cart, setCart }) {
   </span>
 
 </div>
-                <h2 className="text-xl font-bold line-clamp-1 min-h-[30px]">
+                <h2 className="text-sm sm:text-lg lg:text-xl font-bold line-clamp-1 min-h-[24px]">
                   {product.name}
                 </h2>
 
-                <p className="text-blue-600 text-lg font-semibold mt-2">
+                <p className="text-blue-600 text-base sm:text-lg font-semibold mt-2">
                   ₹{product.price.toLocaleString()}
                 </p>
               {product.stock === 0 ? (
@@ -281,7 +281,7 @@ function Products({ cart, setCart }) {
     e.stopPropagation();
     addToCart(product);
   }}
-  className={`mt-4 w-full py-2 rounded-lg text-white transition ${
+  className={`mt-3 w-full py-2 text-sm sm:text-base rounded-lg text-white transition ${
     product.stock === 0
       ? "bg-gray-400 cursor-not-allowed"
       : "bg-blue-600 hover:bg-blue-700"
