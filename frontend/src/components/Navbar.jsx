@@ -10,11 +10,17 @@ import {
   FaChevronDown,
   FaHome,
   FaBoxOpen,
+  FaMoon,
+  FaSun,
 } from "react-icons/fa";
 import Menu from "./Menu";
 import { successToast } from "../utils/toast";
 
-const Navbar = ({ cart = [] }) => {
+const Navbar = ({
+  cart = [],
+  darkMode,
+  setDarkMode,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -62,7 +68,7 @@ const Navbar = ({ cart = [] }) => {
       : "text-white hover:text-yellow-300";
 
   return (
-   <nav className="sticky top-0 z-50 bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 shadow-lg">
+  <nav className="sticky top-0 z-50 bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 dark:from-gray-900 dark:via-gray-800 dark:to-black shadow-lg transition-all duration-300">
 
   <div className="max-w-7xl mx-auto px-4">
 
@@ -88,7 +94,7 @@ const Navbar = ({ cart = [] }) => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleSearch}
-            className="w-full pl-11 pr-4 py-2 rounded-full outline-none"
+            className="w-full pl-11 pr-4 py-2 rounded-full outline-none bg-white text-black dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 transition"
           />
 
         </div>
@@ -126,6 +132,13 @@ const Navbar = ({ cart = [] }) => {
 
         </Link>
 
+          <button
+  onClick={() => setDarkMode(!darkMode)}
+  className="text-white text-xl hover:text-yellow-300 transition"
+>
+  {darkMode ? <FaSun /> : <FaMoon />}
+</button>
+
         {!user ? (
           <>
             <Link
@@ -159,14 +172,24 @@ const Navbar = ({ cart = [] }) => {
       <div className="md:hidden flex items-center gap-4">
 
         <button>
-          <FaSearch className="text-white text-xl" />
-        </button>
+  <FaSearch className="text-white text-xl" />
+</button>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <FaBars className="text-white text-2xl" />
-        </button>
+<button
+  onClick={() => setDarkMode(!darkMode)}
+>
+  {darkMode ? (
+    <FaSun className="text-white text-xl" />
+  ) : (
+    <FaMoon className="text-white text-xl" />
+  )}
+</button>
+
+<button
+  onClick={() => setMenuOpen(!menuOpen)}
+>
+  <FaBars className="text-white text-2xl" />
+</button>
 
       </div>
 
@@ -180,14 +203,14 @@ const Navbar = ({ cart = [] }) => {
   handleLogout={handleLogout}
 />
 {/* Mobile Bottom Navigation */}
-<div className="fixed bottom-0 left-0 w-full md:hidden bg-white border-t shadow-lg flex justify-around items-center py-2 z-40">
+<div className="fixed bottom-0 left-0 w-full md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-lg transition flex justify-around items-center py-2 z-40">
 
   <Link
   to="/"
   className={`flex flex-col items-center ${
     location.pathname === "/"
       ? "text-blue-700"
-      : "text-gray-500"
+      : "text-gray-500 dark:text-gray-300"
   }`}
 >
   <FaHome className="text-xl" />
@@ -199,7 +222,7 @@ const Navbar = ({ cart = [] }) => {
   className={`flex flex-col items-center ${
     location.pathname === "/products"
       ? "text-blue-700"
-      : "text-gray-500"
+      : "text-gray-500 dark:text-gray-300"
   }`}
 >
   <FaBoxOpen className="text-xl" />
@@ -211,7 +234,7 @@ const Navbar = ({ cart = [] }) => {
   className={`relative flex flex-col items-center ${
     location.pathname === "/cart"
       ? "text-blue-700"
-      : "text-gray-500"
+      : "text-gray-500 dark:text-gray-300"
   }`}
 >
   <FaShoppingCart className="text-xl" />
@@ -231,7 +254,7 @@ const Navbar = ({ cart = [] }) => {
     location.pathname === "/profile" ||
     location.pathname === "/login"
       ? "text-blue-700"
-      : "text-gray-500"
+      : "text-gray-500 dark:text-gray-300"
   }`}
 >
   <FaUser className="text-xl" />

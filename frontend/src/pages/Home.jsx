@@ -10,7 +10,7 @@ import Footer from "../components/home/Footer";
 
 function Home() {
   return (
-    <main className="bg-gray-50 overflow-x-hidden">
+    <main className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white overflow-x-hidden transition-all duration-300">
       {/* Hero Banner */}
       <HeroSection />
 

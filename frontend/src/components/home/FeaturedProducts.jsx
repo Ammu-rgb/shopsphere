@@ -23,10 +23,10 @@ function FeaturedProducts() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-20 bg-gray-50 dark:bg-gray-900 transition-all duration-300">
 
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl sm:text-4xl font-bold">
+        <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white">
           ⭐ Featured Products
         </h2>
 
@@ -44,7 +44,7 @@ function FeaturedProducts() {
 
           <div
             key={product._id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col"
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col"
           >
 
             <img
@@ -55,11 +55,11 @@ function FeaturedProducts() {
 
             <div className="p-3 sm:p-5 flex flex-col flex-1">
 
-              <h3 className="text-sm sm:text-xl font-bold line-clamp-1">
+              <h3 className="text-sm sm:text-xl font-bold line-clamp-1 text-gray-900 dark:text-white">
                 {product.name}
               </h3>
 
-              <p className="text-gray-500 text-xs sm:text-base mt-2 line-clamp-2 flex-1">
+              <p className="text-gray-500 dark:text-gray-300 text-xs sm:text-base mt-2 line-clamp-2 flex-1">
                 {product.description}
               </p>
 

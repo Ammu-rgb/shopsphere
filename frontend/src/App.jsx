@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -23,13 +23,31 @@ import Wishlist from "./pages/Wishlist";
 import MyOrders from "./pages/MyOrders";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+
 function App() {
   const [cart, setCart] = useState([]);
+  const [darkMode, setDarkMode] = useState(
+  localStorage.getItem("theme") === "dark"
+);
+
+useEffect(() => {
+  if (darkMode) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  }
+}, [darkMode]);
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-100">
-        <Navbar cart={cart} />
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-white transition-all duration-300">
+        <Navbar
+  cart={cart}
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
         <Routes>
 

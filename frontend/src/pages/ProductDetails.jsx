@@ -205,7 +205,7 @@ await axios.post(
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <div>
           <img
@@ -220,7 +220,7 @@ await axios.post(
             {product.name}
           </h1>
 
-          <p className="mt-3 text-gray-500">
+          <p className="mt-3 text-gray-500 dark:text-gray-400">
             Category: {product.category}
           </p>
           <div className="flex items-center gap-1 mt-3 text-yellow-500">
@@ -230,18 +230,18 @@ await axios.post(
   <FaStar />
   <FaStar />
 
-  <span className="ml-2 text-gray-600">
+  <span className="ml-2 text-gray-600 dark:text-gray-300">
     ({reviews.length} Reviews)
   </span>
 </div>
           <p className="mt-4 text-2xl md:text-3xl font-bold text-green-600">
             ₹{product.price}
           </p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
 Inclusive of all taxes
 </p>
 
-          <p className="mt-6 text-gray-700 leading-7">
+          <p className="mt-6 text-gray-700 dark:text-gray-300 leading-7">
             {product.description}
           </p>
 
@@ -264,21 +264,21 @@ Inclusive of all taxes
 
   <div className="flex items-center gap-3">
     <FaShippingFast className="text-blue-600 text-xl" />
-    <span className="text-gray-700">
+    <span className="text-gray-700 dark:text-gray-300">
       Free Delivery Available
     </span>
   </div>
 
   <div className="flex items-center gap-3">
     <FaShieldAlt className="text-green-600 text-xl" />
-    <span className="text-gray-700">
+    <span className="text-gray-700 dark:text-gray-300">
       100% Secure Payment
     </span>
   </div>
 
   <div className="flex items-center gap-3">
     <FaUndo className="text-orange-500 text-xl" />
-    <span className="text-gray-700">
+    <span className="text-gray-700 dark:text-gray-300">
       7 Days Easy Return
     </span>
   </div>
@@ -331,10 +331,10 @@ Wishlist
                 {reviews.map((review) => (
                   <div
                     key={review._id}
-                    className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-2xl transition duration-300"
+                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition duration-300"
                   >
                     <div className="flex justify-between items-center">
-  <h3 className="font-bold text-lg">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white">
     {review.name}
   </h3>
 
@@ -343,7 +343,7 @@ Wishlist
   </span>
 </div>
 
-                    <p className="mt-4 text-gray-600 leading-7">
+                   <p className="mt-4 text-gray-600 dark:text-gray-300 leading-7">
   {review.comment}
 </p>
                   </div>
@@ -366,7 +366,7 @@ Wishlist
   })
 }
                 required
-                className="w-full border rounded-lg p-3"
+               className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-900 text-black dark:text-white"
               />
 
               <select
@@ -377,7 +377,7 @@ Wishlist
                     rating: Number(e.target.value),
                   })
                 }
-                className="w-full border rounded-lg p-3"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-900 text-black dark:text-white"
               >
                 <option value={5}>5</option>
                 <option value={4}>4</option>
@@ -397,7 +397,7 @@ Wishlist
                   })
                 }
                 required
-                className="w-full border rounded-lg p-3"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-900 text-black dark:text-white"
               />
 
               <button
@@ -423,7 +423,7 @@ Wishlist
             {relatedProducts.map((item) => (
               <div
                 key={item._id}
-                className="border rounded-xl overflow-hidden shadow hover:shadow-lg transition"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow hover:shadow-lg transition"
               >
                 <img
                   src={item.image}
@@ -432,7 +432,7 @@ Wishlist
                 />
 
                 <div className="p-4">
-                  <h3 className="font-bold text-lg">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white">
                     {item.name}
                   </h3>
 

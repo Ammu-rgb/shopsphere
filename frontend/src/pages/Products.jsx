@@ -132,7 +132,7 @@ function Products({ cart, setCart }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-10 transition-all duration-300">
       <h1 className="text-4xl font-bold text-center mb-10">
   {category === "All"
     ? "Our Products 🛍️"
@@ -141,7 +141,7 @@ function Products({ cart, setCart }) {
 
       {/* Search + Filter */}
 
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-10">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-6 mb-10 transition-all">
 
   <div className="flex flex-col lg:flex-row gap-5">
 
@@ -152,7 +152,7 @@ function Products({ cart, setCart }) {
       placeholder="🔍 Search Products..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      className="flex-1 px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      className="flex-1 px-5 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
     />
 
     {/* Category */}
@@ -160,7 +160,7 @@ function Products({ cart, setCart }) {
     <select
       value={category}
       onChange={(e) => setCategory(e.target.value)}
-      className="w-full lg:w-60 px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-blue-500"
+      className="w-full lg:w-60 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500"
     >
       {categories.map((cat) => (
         <option key={cat} value={cat}>
@@ -174,7 +174,7 @@ function Products({ cart, setCart }) {
     <select
       value={sortBy}
       onChange={(e) => setSortBy(e.target.value)}
-      className="w-full lg:w-60 px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-blue-500"
+      className="w-full lg:w-60 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500"
     >
       <option value="default">
         Featured
@@ -196,7 +196,7 @@ function Products({ cart, setCart }) {
 
   </div>
 
-  <p className="mt-5 text-gray-600 font-medium">
+  <p className="mt-5 text-gray-600 dark:text-gray-300 font-medium">
     Showing <span className="font-bold text-blue-600">
       {filteredProducts.length}
     </span> Products
@@ -218,7 +218,7 @@ function Products({ cart, setCart }) {
               onClick={() =>
                 navigate(`/product/${product._id}`)
               }
-            className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition duration-300 flex flex-col cursor-pointer"
+            className="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition duration-300 flex flex-col cursor-pointer"
             >
               <div className="absolute top-4 right-4 z-10">
 
@@ -226,7 +226,7 @@ function Products({ cart, setCart }) {
     onClick={(e) => {
       e.stopPropagation();
     }}
-    className="bg-white rounded-full p-2 shadow-lg hover:bg-red-50 transition"
+    className="bg-white dark:bg-gray-700 rounded-full p-2 shadow-lg hover:bg-red-50 dark:hover:bg-red-900 transition"
   >
     ❤️
   </button>
@@ -250,7 +250,7 @@ function Products({ cart, setCart }) {
   </span>
 
 </div>
-                <h2 className="text-sm sm:text-lg lg:text-xl font-bold line-clamp-1 min-h-[24px]">
+                <h2 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white line-clamp-1 min-h-[24px]">
                   {product.name}
                 </h2>
 
@@ -271,7 +271,7 @@ function Products({ cart, setCart }) {
   </p>
 )}
 
-                <p className="text-gray-600 text-sm mt-2 line-clamp-2 min-h-[45px]">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2 line-clamp-2 min-h-[45px]">
   {product.description}
 </p>
 
