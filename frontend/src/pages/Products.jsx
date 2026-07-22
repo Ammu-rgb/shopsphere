@@ -39,7 +39,10 @@ function Products({ cart, setCart }) {
     try {
       const res = await api.get("/products");
 
-      setProducts(res.data);
+console.log("API Response:", res);
+console.log("Response Data:", res.data);
+
+setProducts(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +100,7 @@ function Products({ cart, setCart }) {
   });
 };
 
-      
+    
  const filteredProducts = products
   .filter((product) => {
     const matchesSearch = product.name
@@ -126,6 +129,13 @@ function Products({ cart, setCart }) {
     return 0;
   });
 
+console.log({
+  totalProducts: products.length,
+  filteredProducts: filteredProducts.length,
+  search,
+  category,
+  firstProduct: products[0],
+});  
   const categories = [
     "All",
     ...new Set(products.map((product) => product.category)),
