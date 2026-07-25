@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   registerUser,
   loginUser,
+  googleLogin,
   logoutUser,
   getUserProfile,
 } = require("../controllers/userAuthController");
@@ -13,6 +14,9 @@ router.post("/register", registerUser);
 
 // Login User
 router.post("/login", loginUser);
+
+// Google Login
+router.post("/google-login", googleLogin);
 
 // Logout User
 router.post("/logout", logoutUser);
