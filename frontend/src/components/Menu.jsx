@@ -181,7 +181,7 @@ const Menu = ({ menuOpen, setMenuOpen, user, handleLogout }) => {
               </Link>
 
               <Link
-                to="/orders"
+                to="/my-orders"
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition dark:text-white"
               >
