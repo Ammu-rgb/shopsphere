@@ -23,7 +23,7 @@ import Wishlist from "./pages/Wishlist";
 import MyOrders from "./pages/MyOrders";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
-
+console.log("API URL:", import.meta.env.VITE_API_URL);
 function App() {
   const [cart, setCart] = useState([]);
   const [darkMode, setDarkMode] = useState(
