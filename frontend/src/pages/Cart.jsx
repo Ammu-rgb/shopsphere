@@ -8,6 +8,8 @@ import {
   FaShieldAlt,
   FaTag,
 } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { successToast } from "../utils/toast";
 function Cart({ cart, setCart }) {
   const navigate = useNavigate();
 
@@ -33,10 +35,60 @@ function Cart({ cart, setCart }) {
     setCart(updatedCart);
   };
 
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter((item) => item._id !== id);
-    setCart(updatedCart);
-  };
+  const removeFromCart = async (id) => {
+  const result = await Swal.fire({
+    title: "Remove this item?",
+
+    html: `
+      <div style="font-size:15px;color:${
+        document.documentElement.classList.contains("dark")
+          ? "#9CA3AF"
+          : "#6B7280"
+      }">
+        This product will be removed from your shopping cart.
+        <br><br>
+        You can add it again anytime from the Products page.
+      </div>
+    `,
+
+    icon: "warning",
+
+    background: document.documentElement.classList.contains("dark")
+      ? "#111827"
+      : "#ffffff",
+
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+
+    showCancelButton: true,
+
+    confirmButtonText: "Remove",
+
+    cancelButtonText: "Keep Item",
+
+    confirmButtonColor: "#DC2626",
+
+    cancelButtonColor: "#2563EB",
+
+    reverseButtons: true,
+
+    focusCancel: true,
+
+    width: "440px",
+  });
+
+  if (!result.isConfirmed) return;
+
+  const updatedCart = cart.filter((item) => item._id !== id);
+
+  setCart(updatedCart);
+
+  successToast(
+    "Item Removed",
+    "The product has been removed from your cart."
+  );
+};
 
   const totalItems = cart.reduce(
     (total, item) => total + item.quantity,
@@ -49,7 +101,7 @@ function Cart({ cart, setCart }) {
   );
 
   return (
-    <div  className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 py-8">
+    <div  className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300">
       <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 flex justify-center items-center gap-3">
   <FaShoppingCart className="text-blue-600" />
   Your Cart
@@ -57,11 +109,11 @@ function Cart({ cart, setCart }) {
 
       {cart.length === 0 ? (
         <div className="text-center mt-20">
-          <h2 className="text-3xl font-bold text-gray-600">
+          <h2 className="text-3xl font-bold text-gray-700 dark:text-white">
             Your Cart is Empty
           </h2>
 
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 dark:text-gray-300 mt-2">
             Add some products to continue shopping.
           </p>
           <button
@@ -77,7 +129,7 @@ Continue Shopping
             {cart.map((item) => (
               <div
                 key={item._id}
-                className="bg-white rounded-2xl shadow-lg p-5 flex flex-col md:flex-row md:justify-between md:items-center gap-6 hover:shadow-xl transition"
+               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 flex flex-col md:flex-row md:justify-between md:items-center gap-6 hover:shadow-xl transition border border-gray-200 dark:border-gray-700"
               >
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 w-full">
                   <img
@@ -87,7 +139,7 @@ Continue Shopping
                   />
 
                   <div>
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                       {item.name}
                     </h2>
 
@@ -136,7 +188,7 @@ Continue Shopping
             ))}
           </div>
 
-          <div className="mt-10 bg-white rounded-2xl shadow-xl p-6 max-w-xl ml-auto">
+          <div className="mt-10 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 max-w-xl ml-auto border border-gray-200 dark:border-gray-700">
             <div className="flex justify-between text-lg sm:text-xl font-semibold">
               <span>Total Items</span>
               <span>{totalItems}</span>
@@ -164,19 +216,47 @@ FREE
 
 </div>
 
-<hr className="my-5" />
+<hr className="my-5 border-gray-300 dark:border-gray-700" />
             <div className="flex justify-between text-2xl sm:text-3xl font-bold text-green-600 mt-4">
               <span>Grand Total</span>
               <span>₹{totalPrice.toLocaleString()}</span>
             </div>
 
             <button
-              onClick={() => navigate("/checkout")}
-              className="mt-6 w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 rounded-xl text-lg font-semibold transition duration-300 shadow-lg hover:shadow-xl"
-            >
-              Proceed Secure Checkout →
-            </button>
-            <div className="mt-6 space-y-3 text-sm text-gray-600">
+  onClick={async () => {
+    Swal.fire({
+      title: "Preparing Secure Checkout...",
+      text: "Please wait while we verify your cart.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+
+      background: document.documentElement.classList.contains("dark")
+        ? "#111827"
+        : "#ffffff",
+
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#111827",
+
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 1800)
+    );
+
+    Swal.close();
+
+    navigate("/checkout");
+  }}
+  className="mt-6 w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 rounded-xl text-lg font-semibold transition duration-300 shadow-lg hover:shadow-xl"
+>
+  Proceed Secure Checkout →
+</button>
+            <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-300">
 
   <div className="flex items-center gap-3">
     <FaTruck className="text-blue-600" />

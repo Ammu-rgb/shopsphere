@@ -110,13 +110,14 @@ useEffect(() => {
 
           {/* Wishlist */}
           <Route
-            path="/wishlist"
-            element={
-              <ProtectedRoute>
-                <Wishlist />
-              </ProtectedRoute>
-            }
-          />
+  path="/wishlist"
+  element={
+    <Wishlist
+      cart={cart}
+      setCart={setCart}
+    />
+  }
+/>
 
           {/* User Profile */}
           <Route
@@ -147,7 +148,14 @@ useEffect(() => {
 />
 
           
-          <Route path="/my-orders" element={<MyOrders />} />
+          <Route
+  path="/my-orders"
+  element={
+    <ProtectedRoute>
+      <MyOrders />
+    </ProtectedRoute>
+  }
+/>
 
             <Route
   path="/order-success"

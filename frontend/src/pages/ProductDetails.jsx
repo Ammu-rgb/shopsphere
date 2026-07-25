@@ -11,6 +11,7 @@ import {
   FaShieldAlt,
   FaUndo,
 } from "react-icons/fa";
+import Swal from "sweetalert2";
 function ProductDetails({ cart, setCart }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -84,74 +85,250 @@ function ProductDetails({ cart, setCart }) {
     return (total / reviews.length).toFixed(1);
   }, [reviews]);
 
-  const addToCart = () => {
-    if (!product) return;
+  const addToCart = async () => {
+  if (!product) return;
 
-    if (product.stock === 0) {
-      errorToast("Product is out of stock.");
+  if (product.stock === 0) {
+    errorToast("Product is out of stock.");
+    return;
+  }
+
+  const result = await Swal.fire({
+    title: "Add to Cart?",
+
+    html: `
+      <div style="font-size:15px;color:${
+        document.documentElement.classList.contains("dark")
+          ? "#9CA3AF"
+          : "#6B7280"
+      }">
+        This product will be added to your shopping cart.
+      </div>
+    `,
+
+    icon: "question",
+
+    background: document.documentElement.classList.contains("dark")
+      ? "#111827"
+      : "#ffffff",
+
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+
+    showCancelButton: true,
+
+    confirmButtonText: "Add",
+
+    cancelButtonText: "Cancel",
+
+    confirmButtonColor: "#2563EB",
+
+    cancelButtonColor: "#6B7280",
+
+    reverseButtons: true,
+
+    focusCancel: true,
+
+    width: "440px",
+  });
+
+  if (!result.isConfirmed) return;
+
+  const existing = cart.find(
+    (item) => item._id === product._id
+  );
+
+  if (existing) {
+    if (existing.quantity >= product.stock) {
+      errorToast("No more stock available.");
       return;
     }
 
-    const existing = cart.find(
-      (item) => item._id === product._id
+    const updated = cart.map((item) =>
+      item._id === product._id
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+          }
+        : item
     );
 
-    if (existing) {
-      if (existing.quantity >= product.stock) {
-        errorToast("No more stock available.");
-        return;
-      }
-
-      const updated = cart.map((item) =>
-        item._id === product._id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
-      );
-
-      setCart(updated);
-    } else {
-      setCart([
-        ...cart,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ]);
-    }
-
-    successToast("Added to cart.");
-  };
-
-  const handleBuyNow = () => {
-    addToCart();
-
-    if (product && product.stock > 0) {
-      navigate("/cart");
-    }
-  };
-
-  const addToWishlist = async () => {
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-
-await axios.post(
-  `${import.meta.env.VITE_API_URL}/api/wishlist`,
-  {
-    userId: user.id,
-    productId: product._id,
+    setCart(updated);
+  } else {
+    setCart([
+      ...cart,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
   }
-);
-      
 
-      successToast("Added to wishlist.");
-    } catch (error) {
-      console.error(error);
-      errorToast("Failed to add wishlist.");
+  successToast("Added to cart.");
+};
+
+ const handleBuyNow = async () => {
+  if (!product) return;
+
+  if (product.stock === 0) {
+    errorToast("Product is out of stock.");
+    return;
+  }
+
+  const result = await Swal.fire({
+    title: "Buy this product?",
+
+    html: `
+      <div style="font-size:15px;color:${
+        document.documentElement.classList.contains("dark")
+          ? "#9CA3AF"
+          : "#6B7280"
+      }">
+        This product will be added to your cart and you'll proceed to checkout.
+      </div>
+    `,
+
+    icon: "question",
+
+    background: document.documentElement.classList.contains("dark")
+      ? "#111827"
+      : "#ffffff",
+
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+
+    showCancelButton: true,
+
+    confirmButtonText: "Continue",
+
+    cancelButtonText: "Cancel",
+
+    confirmButtonColor: "#2563EB",
+
+    cancelButtonColor: "#6B7280",
+
+    reverseButtons: true,
+
+    focusCancel: true,
+
+    width: "440px",
+  });
+
+  if (!result.isConfirmed) return;
+
+  const existing = cart.find(
+    (item) => item._id === product._id
+  );
+
+  if (existing) {
+    if (existing.quantity >= product.stock) {
+      errorToast("No more stock available.");
+      return;
     }
-  };
+
+    const updated = cart.map((item) =>
+      item._id === product._id
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+          }
+        : item
+    );
+
+    setCart(updated);
+  } else {
+    setCart([
+      ...cart,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
+  }
+
+  successToast("Product added to cart.");
+
+  navigate("/cart");
+};
+
+const addToWishlist = async () => {
+  const result = await Swal.fire({
+    title: "Add to Wishlist?",
+
+    html: `
+      <div style="font-size:15px;color:${
+        document.documentElement.classList.contains("dark")
+          ? "#9CA3AF"
+          : "#6B7280"
+      }">
+        Save this product to your wishlist for later.
+      </div>
+    `,
+
+    icon: "question",
+
+    background: document.documentElement.classList.contains("dark")
+      ? "#111827"
+      : "#ffffff",
+
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+
+    showCancelButton: true,
+
+    confirmButtonText: "Add",
+
+    cancelButtonText: "Cancel",
+
+    confirmButtonColor: "#2563EB",
+
+    cancelButtonColor: "#6B7280",
+
+    reverseButtons: true,
+
+    focusCancel: true,
+
+    width: "440px",
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+  errorToast("Please login first.");
+  navigate("/login");
+  return;
+}
+console.log("User Object:", user);
+console.log("Product Object:", product);
+
+console.log({
+  userId: user.id,
+  productId: product._id,
+});
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/wishlist`,
+      {
+        userId: user.id,
+        productId: product._id,
+      }
+    );
+
+    successToast("Added to wishlist.");
+  } catch (error) {
+  console.log("Status:", error.response?.status);
+  console.log("Response:", error.response?.data);
+  console.log(error);
+
+  errorToast(
+    error.response?.data?.message || "Failed to add wishlist."
+  );
+}
+};
 
   const submitReview = async (e) => {
     e.preventDefault();
@@ -208,11 +385,11 @@ await axios.post(
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <div>
-          <img
-            src={product.image}
-            alt={product.name}
-           className="w-full h-72 sm:h-96 lg:h-[520px] object-cover rounded-2xl shadow-2xl hover:scale-105 transition duration-500"
-          />
+      <img
+  src={product.image}
+  alt={product.name}
+  className="w-full h-72 sm:h-96 lg:h-[520px] object-cover rounded-2xl shadow-2xl hover:scale-105 transition duration-500"
+/>
         </div>
 
         <div>

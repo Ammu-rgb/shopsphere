@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import Menu from "./Menu";
 import { successToast } from "../utils/toast";
-
+import Swal from "sweetalert2";
 const Navbar = ({
   cart = [],
   darkMode,
@@ -42,13 +42,47 @@ const Navbar = ({
     }
   }, [location]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: "Sign out?",
+    html: `
+      <p style="font-size:15px;color:${
+        darkMode ? "#9CA3AF" : "#6B7280"
+      }">
+        You’ll need to sign in again to access your account.
+      </p>
+    `,
+
+    showCancelButton: true,
+
+    confirmButtonText: "Logout",
+    cancelButtonText: "Stay",
+
+    confirmButtonColor: "#2563eb",
+    cancelButtonColor: "#6b7280",
+
+    background: darkMode ? "#111827" : "#ffffff",
+    color: darkMode ? "#ffffff" : "#111827",
+
+    width: "430px",
+
+    reverseButtons: true,
+  });
+
+  if (result.isConfirmed) {
     localStorage.removeItem("user");
     localStorage.removeItem("userToken");
-    successToast("Logged out successfully");
+
+    successToast(
+      "Logged Out 👋",
+      "See you again soon!"
+    );
+
     setMenuOpen(false);
+
     navigate("/login");
-  };
+  }
+};
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -107,9 +141,41 @@ const Navbar = ({
           Home
         </Link>
 
-        <Link to="/products" className={navClass("/products")}>
-          Products
-        </Link>
+        <Link
+  to="#"
+  onClick={async (e) => {
+    e.preventDefault();
+
+    Swal.fire({
+      title: "Loading Products...",
+      text: "Fetching the latest collection.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+
+      background: document.documentElement.classList.contains("dark")
+        ? "#111827"
+        : "#ffffff",
+
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#111827",
+
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    Swal.close();
+
+    navigate("/products");
+  }}
+  className={navClass("/products")}
+>
+  Products
+</Link>
 
         <Link
           to="/wishlist"

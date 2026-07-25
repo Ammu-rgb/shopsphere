@@ -12,7 +12,7 @@ import {
   FaBoxOpen,
 } from "react-icons/fa";
 import { successToast, errorToast } from "../utils/toast";
-
+import Swal from "sweetalert2";
 function Checkout({ cart, setCart }) {
   const [couponCode, setCouponCode] = useState("");
 const [discount, setDiscount] = useState(0);
@@ -29,7 +29,61 @@ const [appliedCoupon, setAppliedCoupon] = useState(null);
   });
   const [addressOptions, setAddressOptions] = useState([]);
 const [loadingAddress, setLoadingAddress] = useState(false);
+  const selectStyles = {
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: document.documentElement.classList.contains("dark")
+      ? "#111827"
+      : "#ffffff",
+    borderColor: document.documentElement.classList.contains("dark")
+      ? "#4B5563"
+      : "#D1D5DB",
+    color: "#fff",
+    minHeight: "48px",
+  }),
 
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: document.documentElement.classList.contains("dark")
+      ? "#1F2937"
+      : "#ffffff",
+  }),
+
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? "#2563EB"
+      : document.documentElement.classList.contains("dark")
+      ? "#1F2937"
+      : "#ffffff",
+
+    color:
+      document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#111827",
+
+    cursor: "pointer",
+  }),
+
+  singleValue: (provided) => ({
+    ...provided,
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+  }),
+
+  input: (provided) => ({
+    ...provided,
+    color: document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#111827",
+  }),
+
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#9CA3AF",
+  }),
+};
   const totalItems = cart.reduce(
     (total, item) => total + item.quantity,
     0
@@ -99,6 +153,53 @@ const [loadingAddress, setLoadingAddress] = useState(false);
 );
     return;
   }
+
+const result = await Swal.fire({
+  title: "Proceed to Payment?",
+
+  html: `
+    <div style="font-size:15px;color:${
+      document.documentElement.classList.contains("dark")
+        ? "#9CA3AF"
+        : "#6B7280"
+    }">
+      You will be redirected to Razorpay to complete your payment securely.
+      <br><br>
+      <b>Total Payable:</b>
+      <span style="color:#16A34A;font-size:18px;">
+        ₹${grandTotal.toLocaleString()}
+      </span>
+    </div>
+  `,
+
+  icon: "question",
+
+  background: document.documentElement.classList.contains("dark")
+    ? "#111827"
+    : "#ffffff",
+
+  color: document.documentElement.classList.contains("dark")
+    ? "#ffffff"
+    : "#111827",
+
+  showCancelButton: true,
+
+  confirmButtonText: "Continue",
+
+  cancelButtonText: "Cancel",
+
+  confirmButtonColor: "#2563EB",
+
+  cancelButtonColor: "#6B7280",
+
+  reverseButtons: true,
+
+  width: "440px",
+});
+
+if (!result.isConfirmed) {
+  return;
+}
 
   try {
     // Razorpay Order Create
@@ -201,7 +302,7 @@ navigate("/order-success");
 };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white px-4 sm:px-6 lg:px-8 py-6 md:py-10 transition-all duration-300">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-10 flex justify-center items-center gap-3">
   <FaCreditCard className="text-blue-600" />
   Secure Checkout
@@ -209,7 +310,7 @@ navigate("/order-success");
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Shipping Address */}
-        <div className="bg-white rounded-xl shadow-lg p-5 md:p-6">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-5 md:p-6 transition-all">
           <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
   <FaMapMarkerAlt className="text-red-500" />
   Shipping Address
@@ -222,7 +323,7 @@ navigate("/order-success");
               placeholder="Full Name"
               value={address.name}
               onChange={handleChange}
-              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
+             className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -231,7 +332,7 @@ navigate("/order-success");
               placeholder="Phone Number"
               value={address.phone}
               onChange={handleChange}
-              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
+              className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -240,7 +341,7 @@ navigate("/order-success");
               placeholder="City"
               value={address.city}
               onChange={handleChange}
-            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
+           className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -249,7 +350,7 @@ navigate("/order-success");
               placeholder="State"
               value={address.state}
               onChange={handleChange}
-              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
+             className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
             <input
@@ -258,7 +359,7 @@ navigate("/order-success");
               placeholder="Pincode"
               value={address.pincode}
               onChange={handleChange}
-              className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
+             className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full p-3 rounded-xl transition"
             />
 
           <div>
@@ -267,6 +368,7 @@ navigate("/order-success");
   </label>
 
 <Select
+styles={selectStyles}
   options={addressOptions}
   isLoading={loadingAddress}
   placeholder="Search your address..."
@@ -312,7 +414,7 @@ navigate("/order-success");
         </div>
 
         {/* Order Summary */}
-        <div className="bg-white rounded-xl shadow-lg p-5 md:p-6">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-5 md:p-6 transition-all">
           <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
   <FaBoxOpen className="text-blue-600" />
   Order Summary
@@ -327,7 +429,7 @@ navigate("/order-success");
               {cart.map((item) => (
                 <div
                   key={item._id}
-                 className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 rounded-xl p-4 mb-3 hover:bg-gray-100 transition"
+                className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 dark:bg-gray-700 rounded-xl p-4 mb-3 hover:bg-gray-100 dark:hover:bg-gray-600 transition"
                 >
                   <div>
                     <h3 className="font-semibold">
@@ -372,7 +474,7 @@ navigate("/order-success");
                   <span>Grand Total</span>
                   <span>₹{grandTotal.toLocaleString()}</span>
                 </div>
-                <div className="mt-6 space-y-3 text-gray-600">
+                <div className="mt-6 space-y-3 text-gray-600 dark:text-gray-300">
 
 <div className="flex items-center gap-3">
 <FaTruck className="text-blue-600"/>
