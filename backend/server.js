@@ -22,6 +22,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://lucky-heliotrope-25c089.netlify.app/"
+  
     ],
     credentials: true,
   })
