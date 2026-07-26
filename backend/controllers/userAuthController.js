@@ -257,6 +257,7 @@ const getUserProfile = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  googleLogin,
   logoutUser,
   getUserProfile,
   forgotPassword,

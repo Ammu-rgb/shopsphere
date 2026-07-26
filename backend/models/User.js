@@ -32,6 +32,13 @@ isAdmin: {
   type: Boolean,
   default: false,
 },
+resetPasswordToken: {
+  type: String,
+},
+
+resetPasswordExpire: {
+  type: Date,
+},
 });
 
 const User = mongoose.model("User", userSchema);

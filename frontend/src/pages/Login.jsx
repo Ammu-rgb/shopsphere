@@ -156,7 +156,12 @@ function Login() {
     to="/forgot-password"
     className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
   >
-    Forgot Password?
+    <Link
+  to="/forgot-password"
+  className="text-blue-600 hover:underline text-sm"
+>
+  Forgot Password?
+</Link>
   </Link>
 </p>
         <p className="text-center text-sm sm:text-base mt-6 text-gray-600 dark:text-gray-300">

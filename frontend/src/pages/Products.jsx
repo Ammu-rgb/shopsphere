@@ -329,7 +329,7 @@ console.log({
               onClick={() =>
                 navigate(`/product/${product._id}`)
               }
-            className="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition duration-300 flex flex-col h-full cursor-pointer"
+            className="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg overflow-visible hover:shadow-2xl hover:-translate-y-2 transition duration-300 flex flex-col h-full cursor-pointer"
             >
               <div className="absolute top-4 right-4 z-10">
 
@@ -338,10 +338,10 @@ console.log({
     e.stopPropagation();
     addToWishlist(product);
   }}
-  className="absolute top-4 right-4 z-10 bg-white dark:bg-gray-700 rounded-full p-2 shadow-lg transition-all duration-300 hover:bg-red-100 dark:hover:bg-red-900 hover:scale-110 active:scale-90"
+className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 z-20 bg-white dark:bg-gray-700 rounded-full p-1.5 shadow-lg transition-all duration-300 hover:bg-red-100 dark:hover:bg-red-900 hover:scale-110 active:scale-90"
 >
-  <FaHeart
-    className={`text-xl transition-all duration-300 ${
+    <FaHeart
+  className={`text-sm sm:text-base transition-all duration-300 ${
       wishlistIds.includes(product._id)
         ? "text-red-500 scale-110 animate-bounce"
         : "text-gray-400 hover:text-red-500"
@@ -356,7 +356,7 @@ console.log({
                className="w-full h-32 object-cover bg-gray-100 dark:bg-gray-700 transition duration-500 hover:scale-105"
               />
 
-              <div className="p-2 sm:p-3 flex flex-col flex-1">
+              <div className="p-3 sm:p-4 flex flex-col flex-1">
                 <div className="flex justify-between items-center">
 
   <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -389,19 +389,19 @@ console.log({
   </p>
 )}
 
-                <p
-className="text-gray-600 dark:text-gray-300 text-xs mt-2 line-clamp-1 min-h-[20px]"
+  <p
+className="text-gray-600 dark:text-gray-300 text-xs mt-2 line-clamp-2 min-h-[36px]"
 >
   {product.description}
 </p>
 
-                <button
+      <button
   disabled={product.stock === 0}
   onClick={(e) => {
     e.stopPropagation();
     addToCart(product);
   }}
-  className={`mt-auto w-full py-1.5 text-sm rounded-lg text-white transition ${
+  className={`mt-3 w-full py-2 text-sm rounded-lg text-white transition ${
     product.stock === 0
       ? "bg-gray-400 cursor-not-allowed"
       : "bg-blue-600 hover:bg-blue-700"

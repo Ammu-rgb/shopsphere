@@ -23,6 +23,7 @@ import Wishlist from "./pages/Wishlist";
 import MyOrders from "./pages/MyOrders";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import ForgotPassword from "./pages/ForgotPassword";
 console.log("API URL:", import.meta.env.VITE_API_URL);
 function App() {
   const [cart, setCart] = useState([]);
@@ -57,7 +58,10 @@ useEffect(() => {
           {/* User Authentication */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
+        <Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
           {/* Admin Authentication */}
           <Route
             path="/admin-login"
@@ -174,8 +178,7 @@ useEffect(() => {
             }
           />
         
-        </Routes>
-      
+            </Routes>
       </div>
     </BrowserRouter>
   );
