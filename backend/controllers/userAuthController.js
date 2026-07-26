@@ -2,7 +2,8 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 // ================= REGISTER USER =================
 
 const registerUser = async (req, res) => {
@@ -189,11 +190,75 @@ const getUserProfile = async (req, res) => {
     });
   }
 };
+  const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.resetPasswordExpire =
+      Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    const resetUrl =
+      `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+    const message = `
+      <h2>ShopSphere Password Reset</h2>
+
+      <p>Click the button below to reset your password.</p>
+
+      <a
+        href="${resetUrl}"
+        style="
+          background:#2563eb;
+          color:white;
+          padding:12px 20px;
+          border-radius:8px;
+          text-decoration:none;
+        "
+      >
+        Reset Password
+      </a>
+
+      <p>This link expires in 15 minutes.</p>
+    `;
+
+    await sendEmail({
+      email: user.email,
+      subject: "Reset Your Password",
+      message,
+    });
+
+    res.status(200).json({
+      message: "Reset link sent to your email",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   registerUser,
   loginUser,
-  googleLogin,
   logoutUser,
   getUserProfile,
+  forgotPassword,
 };

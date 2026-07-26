@@ -15,15 +15,23 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
 
-  password: {
-    type: String,
-    required: true,
-  },
+    password: {
+  type: String,
+  required: true,
+},
 
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
+resetPasswordToken: {
+  type: String,
+},
+
+resetPasswordExpire: {
+  type: Date,
+},
+
+isAdmin: {
+  type: Boolean,
+  default: false,
+},
 });
 
 const User = mongoose.model("User", userSchema);
