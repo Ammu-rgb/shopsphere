@@ -190,17 +190,19 @@ const getUserProfile = async (req, res) => {
   }
 };
   const forgotPassword = async (req, res) => {
+    console.log("STEP 1");
   try {
+    console.log("STEP 2");
     const { email } = req.body;
 
     const user = await User.findOne({ email });
-
+    console.log("STEP 3");
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
+    console.log("STEP 4");
     const resetToken = crypto.randomBytes(32).toString("hex");
 
     user.resetPasswordToken = crypto
@@ -212,7 +214,7 @@ const getUserProfile = async (req, res) => {
       Date.now() + 15 * 60 * 1000;
 
     await user.save();
-
+    console.log("STEP 5");
     const resetUrl =
       `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
@@ -242,12 +244,13 @@ const getUserProfile = async (req, res) => {
       subject: "Reset Your Password",
       message,
     });
-
+    console.log("STEP 6");
     res.status(200).json({
       message: "Reset link sent to your email",
     });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: error.message,
     });
