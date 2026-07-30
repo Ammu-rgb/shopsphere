@@ -106,33 +106,17 @@ const Navbar = ({
 
   <div className="max-w-7xl mx-auto px-4">
 
-    <div className="flex items-center justify-between h-16">
+    <div className="relative flex items-center justify-between h-16">
 
       {/* Logo */}
-      <Link
-        to="/"
-        className="text-2xl font-bold text-white tracking-wide"
-      >
-        ShopSphere
-      </Link>
+     <Link
+  to="/"
+  className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 text-2xl font-bold text-white tracking-wide"
+>
+  ShopSphere
+</Link>
 
-      {/* Desktop Search */}
-      <div className="hidden md:flex flex-1 justify-center px-8">
-        <div className="relative w-full max-w-xl">
-
-          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleSearch}
-            className="w-full pl-11 pr-4 py-2 rounded-full outline-none bg-white text-black dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 transition"
-          />
-
-        </div>
-      </div>
+      
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center gap-6">
@@ -235,11 +219,9 @@ const Navbar = ({
 
       {/* Mobile Top Navbar */}
 
-      <div className="md:hidden flex items-center gap-4">
+     <div className="md:hidden ml-auto flex items-center gap-4">
 
-        <button>
-  <FaSearch className="text-white text-xl" />
-</button>
+
 
 <button
   onClick={() => setDarkMode(!darkMode)}

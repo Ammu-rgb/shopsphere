@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 import { successToast, errorToast } from "../utils/toast";
 import { FaHeart } from "react-icons/fa";
+import { ShoppingBag, Search } from "lucide-react";
 import {
   useNavigate,
   useLocation,
@@ -14,6 +15,7 @@ function Products({ cart, setCart }) {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [sortBy, setSortBy] = useState("default");
   const [searchParams] = useSearchParams();
   const [wishlistIds, setWishlistIds] = useState([]);
@@ -183,7 +185,15 @@ setProducts(res.data);
     );
   }
 };
-    
+    const suggestions = search.trim()
+  ? products
+      .filter((product) =>
+        product.name
+          .toLowerCase()
+          .includes(search.toLowerCase())
+      )
+      .slice(0, 6)
+  : [];
  const filteredProducts = products
   .filter((product) => {
     const matchesSearch = product.name
@@ -224,13 +234,18 @@ console.log({
     ...new Set(products.map((product) => product.category)),
   ];
 
-  return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-10 transition-all duration-300">
-      <h1 className="text-4xl font-bold text-center mb-10">
-  {category === "All"
-    ? "Our Products 🛍️"
-    : `${category} Products`}
-</h1>
+    return (
+  <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-10 transition-all duration-300">
+    
+    <div className="flex items-center justify-center gap-3 mb-10">
+  <ShoppingBag className="text-blue-600" size={32} />
+
+  <h1 className="text-4xl font-bold">
+    {category === "All"
+      ? "Our Products"
+      : `${category} Products`}
+  </h1>
+</div>
 
       {/* Search + Filter */}
 
@@ -240,34 +255,73 @@ console.log({
 
     {/* Search */}
 
-    <input
-      type="text"
-      placeholder="🔍 Search Products..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      className="flex-1 px-5 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-    />
+    <div className="relative flex-1">
 
-    {/* Category */}
+  <Search
+    size={19}
+    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none z-10"
+  />
 
-    <select
-      value={category}
-      onChange={(e) => setCategory(e.target.value)}
-      className="w-full lg:w-60 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500"
-    >
-      {categories.map((cat) => (
-        <option key={cat} value={cat}>
-          {cat}
-        </option>
+  <input
+    type="text"
+    placeholder="Search products..."
+    value={search}
+    onChange={(e) => {
+      setSearch(e.target.value);
+      setShowSuggestions(true);
+    }}
+    onFocus={() => {
+      if (search.trim()) {
+        setShowSuggestions(true);
+      }
+    }}
+    onBlur={() => {
+      setTimeout(() => setShowSuggestions(false), 150);
+    }}
+    className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-200 focus:bg-white dark:focus:bg-gray-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+  />
+
+  {showSuggestions && suggestions.length > 0 && (
+    <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden z-50">
+
+      {suggestions.map((product) => (
+        <button
+          key={product._id}
+          type="button"
+          onMouseDown={() => {
+            setSearch(product.name);
+            setShowSuggestions(false);
+
+            navigate(
+              `/products?search=${encodeURIComponent(product.name)}`
+            );
+          }}
+          className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+        >
+          <Search
+            size={16}
+            className="text-gray-400 dark:text-gray-500 flex-shrink-0"
+          />
+
+          <span className="text-sm text-gray-800 dark:text-gray-200 truncate">
+            {product.name}
+          </span>
+        </button>
       ))}
-    </select>
+
+    </div>
+  )}
+
+</div>
+
+   
 
     {/* Sort */}
 
     <select
       value={sortBy}
       onChange={(e) => setSortBy(e.target.value)}
-      className="w-full lg:w-60 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-900 text-black dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500"
+      className="w-full lg:w-60 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white outline-none transition-all duration-200 focus:bg-white dark:focus:bg-gray-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 cursor-pointer"
     >
       <option value="default">
         Featured

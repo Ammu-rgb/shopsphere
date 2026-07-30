@@ -129,61 +129,63 @@ Continue Shopping
             {cart.map((item) => (
               <div
                 key={item._id}
-               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 flex flex-col md:flex-row md:justify-between md:items-center gap-6 hover:shadow-xl transition border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-3 flex flex-row items-center gap-3 hover:shadow-xl transition border border-gray-200 dark:border-gray-700"
               >
-                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 w-full">
+               <div className="flex items-start gap-4 w-full">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-xl bg-gray-100"
+                  className="w-24 h-24 rounded-xl object-cover flex-shrink-0 border border-gray-200 dark:border-gray-700"
                   />
 
-                  <div>
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                  <div className="flex-1 flex flex-col justify-between min-h-[96px]">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white leading-6">
                       {item.name}
                     </h2>
 
-                    <p className="text-blue-600 font-semibold mt-2">
+                    <p className="text-green-600 text-lg font-bold mt-1">
                       ₹{item.price.toLocaleString()}
                     </p>
 
-                    <div className="flex items-center gap-3 mt-4">
-                      <button
-                        onClick={() => decreaseQuantity(item._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
-                      >
-                        <FaMinus />
-                      </button>
+                  <div className="mt-3 flex items-center w-fit rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden shadow-sm">
 
-                      <span className="font-bold text-lg">
-                        {item.quantity}
-                      </span>
+  <button
+    onClick={() => decreaseQuantity(item._id)}
+    className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-gray-700 hover:bg-red-500 hover:text-white transition"
+  >
+    <FaMinus size={11} />
+  </button>
 
-                      <button
-                        onClick={() => increaseQuantity(item._id)}
-                        className="bg-green-600 hover:bg-green-700 text-white w-9 h-9 rounded-full flex items-center justify-center transition"
-                      >
-                        <FaPlus />
-                      </button>
-                    </div>
+  <span className="w-9 h-8 flex items-center justify-center font-semibold text-sm bg-white dark:bg-gray-800">
+    {item.quantity}
+  </span>
+
+  <button
+    onClick={() => increaseQuantity(item._id)}
+    className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-gray-700 hover:bg-green-600 hover:text-white transition"
+  >
+    <FaPlus size={11} />
+  </button>
+
+</div>
                   </div>
                 </div>
 
-                <div className="text-center md:text-right w-full md:w-auto">
-                  <h2 className="text-xl font-bold text-green-600">
-                    ₹{(item.price * item.quantity).toLocaleString()}
-                  </h2>
+              <div className="flex flex-col justify-between items-end h-24 min-w-[90px] flex-shrink-0">
 
-                  <button
-                    onClick={() => removeFromCart(item._id)}
-                    className="mt-4 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl transition"
-                  >
-                    <>
-  <FaTrash className="inline mr-2" />
-  Remove
-</>
-                  </button>
-                </div>
+              <h2 className="text-lg font-bold text-green-600">
+    ₹{(item.price * item.quantity).toLocaleString()}
+  </h2>
+
+  <button
+    onClick={() => removeFromCart(item._id)}
+  className="flex items-center gap-1.5 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300"
+  >
+    <FaTrash />
+    Remove
+  </button>
+
+</div>
               </div>
             ))}
           </div>

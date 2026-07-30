@@ -283,22 +283,24 @@ const Wishlist = ({ cart, setCart }) => {
 
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="space-y-6">
 
           {wishlist.map((item) => (
             <div
-              key={item._id}
-              className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
-            >
-              <img
-                src={item.product?.image}
-                alt={item.product?.name}
-                className="w-full aspect-square object-cover"
-              />
+  key={item._id}
+ className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-3 flex flex-row items-center gap-3 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition"
+>
+             <div className="flex flex-row items-start gap-3 flex-1 min-w-0">
 
-              <div className="p-4 flex flex-col flex-1">
+  <img
+    src={item.product?.image}
+    alt={item.product?.name}
+   className="w-24 h-24 object-cover rounded-xl bg-gray-100 flex-shrink-0"
+  />
 
-                <h2 className="font-bold text-lg line-clamp-2 min-h-[56px]">
+  <div className="flex-1">
+
+                <h2 className="text-xl font-bold">
                   {item.product?.name}
                 </h2>
 
@@ -315,13 +317,13 @@ const Wishlist = ({ cart, setCart }) => {
                     🔴 Out of Stock
                   </p>
                 )}
-
-                <div className="mt-auto space-y-3 pt-5">
+                </div> 
+                <div className="w-auto flex items-center gap-2 flex-shrink-0">
 
                   <button
                     onClick={() => addToCart(item.product)}
                     disabled={item.product?.stock === 0}
-                    className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition ${
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl font-semibold text-xs transition ${
                       item.product?.stock === 0
                         ? "bg-gray-400 cursor-not-allowed text-white"
                         : "bg-blue-600 hover:bg-blue-700 text-white"
@@ -335,7 +337,7 @@ const Wishlist = ({ cart, setCart }) => {
                     onClick={() =>
                       removeWishlist(item._id)
                     }
-                    className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold transition"
+                  className="flex items-center justify-center gap-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-xs transition"
                   >
                     <FaTrashAlt />
                     Remove
