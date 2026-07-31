@@ -141,27 +141,23 @@ function Login() {
   <div className="flex-1 border-t border-gray-300"></div>
 </div>
       <div className="flex justify-center mb-5">
-  <GoogleLogin
-    onSuccess={handleGoogleLogin}
-    onError={() => {
-      errorToast(
-        "Google Login Failed",
-        "Please try again."
-      );
-    }}
-  />
+      <GoogleLogin
+  onSuccess={handleGoogleLogin}
+  onError={() => {
+    errorToast(
+      "Google Login Failed",
+      "Please try again."
+    );
+  }}
+  use_fedcm_for_prompt={true}
+/>
 </div>
       <p className="text-center mb-4">
   <Link
     to="/forgot-password"
-    className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+    className="text-blue-600 dark:text-blue-400 hover:underline font-semibold text-sm"
   >
-    <Link
-  to="/forgot-password"
-  className="text-blue-600 hover:underline text-sm"
->
-  Forgot Password?
-</Link>
+    Forgot Password?
   </Link>
 </p>
         <p className="text-center text-sm sm:text-base mt-6 text-gray-600 dark:text-gray-300">
