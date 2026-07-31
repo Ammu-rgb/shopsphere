@@ -21,8 +21,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "https://lucky-heliotrope-25c089.netlify.app"
-  
+      "https://lucky-heliotrope-25c089.netlify.app",
+      "https://shopsphere-tech.vercel.app",
     ],
     credentials: true,
   })
