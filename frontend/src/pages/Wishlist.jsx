@@ -298,9 +298,9 @@ const Wishlist = ({ cart, setCart }) => {
    className="w-24 h-24 object-cover rounded-xl bg-gray-100 flex-shrink-0"
   />
 
-  <div className="flex-1">
+  <div className="flex-1 min-w-0">
 
-                <h2 className="text-xl font-bold">
+                <h2 className="text-xl font-bold break-words leading-tight">
                   {item.product?.name}
                 </h2>
 
@@ -318,12 +318,12 @@ const Wishlist = ({ cart, setCart }) => {
                   </p>
                 )}
                 </div> 
-                <div className="w-auto flex items-center gap-2 flex-shrink-0">
+                <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0 w-full sm:w-auto">
 
                   <button
                     onClick={() => addToCart(item.product)}
                     disabled={item.product?.stock === 0}
-                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl font-semibold text-xs transition ${
+                    className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition ${
                       item.product?.stock === 0
                         ? "bg-gray-400 cursor-not-allowed text-white"
                         : "bg-blue-600 hover:bg-blue-700 text-white"
@@ -337,7 +337,7 @@ const Wishlist = ({ cart, setCart }) => {
                     onClick={() =>
                       removeWishlist(item._id)
                     }
-                  className="flex items-center justify-center gap-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-xs transition"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-sm transition"
                   >
                     <FaTrashAlt />
                     Remove
