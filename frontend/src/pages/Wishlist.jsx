@@ -290,7 +290,7 @@ const Wishlist = ({ cart, setCart }) => {
   key={item._id}
  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-3 flex flex-row items-center gap-3 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition"
 >
-             <div className="flex flex-row items-start gap-3 flex-1 min-w-0">
+             <div className="flex items-start gap-3 w-full">
 
   <img
     src={item.product?.image}
@@ -298,7 +298,7 @@ const Wishlist = ({ cart, setCart }) => {
    className="w-24 h-24 object-cover rounded-xl bg-gray-100 flex-shrink-0"
   />
 
-  <div className="flex-1 min-w-0">
+  <div className="flex-1">
 
                 <h2 className="text-xl font-bold break-words leading-tight">
                   {item.product?.name}
@@ -316,34 +316,34 @@ const Wishlist = ({ cart, setCart }) => {
                   <p className="text-red-500 font-semibold mt-2">
                     🔴 Out of Stock
                   </p>
+
                 )}
+                <div className="flex gap-2 mt-4">
+
+  <button
+    onClick={() => addToCart(item.product)}
+    disabled={item.product?.stock === 0}
+    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap ${
+      item.product?.stock === 0
+        ? "bg-gray-400 cursor-not-allowed text-white"
+        : "bg-blue-600 hover:bg-blue-700 text-white"
+    }`}
+  >
+    <FaShoppingCart />
+    Add
+  </button>
+
+  <button
+    onClick={() => removeWishlist(item._id)}
+    className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white text-xs font-semibold whitespace-nowrap"
+  >
+    <FaTrashAlt />
+    Remove
+  </button>
+
+</div>
                 </div> 
-                <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0 w-full sm:w-auto">
-
-                  <button
-                    onClick={() => addToCart(item.product)}
-                    disabled={item.product?.stock === 0}
-                    className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition ${
-                      item.product?.stock === 0
-                        ? "bg-gray-400 cursor-not-allowed text-white"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
-                    }`}
-                  >
-                    <FaShoppingCart />
-                    Add to Cart
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      removeWishlist(item._id)
-                    }
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold text-sm transition"
-                  >
-                    <FaTrashAlt />
-                    Remove
-                  </button>
-
-                </div>
+                
 
               </div>
 
